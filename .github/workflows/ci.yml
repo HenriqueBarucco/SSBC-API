@@ -27,5 +27,14 @@ jobs:
       - name: Run tests
         run: ./gradlew test --no-daemon
 
-      - name: Docker build
-        run: docker build -t myapp:test .
+      - name: Log in to Registry
+        run: echo "${{ secrets.REGISTRY_PASSWORD }}" | docker login "${{ secrets.REGISTRY_ENDPOINT }}" -u "${{ secrets.REGISTRY_USERNAME }}" --password-stdin
+
+      - name: Set TAG from commit hash
+        id: vars
+        run: echo "TAG=$(echo $GITHUB_SHA | cut -c1-8)" >> $GITHUB_ENV
+
+      - name: Build and push Docker image
+        run: |
+          docker build -t "${{ secrets.REGISTRY_ENDPOINT }}"/ssbc-api:${TAG} .
+          docker push "${{ secrets.REGISTRY_ENDPOINT }}"/ssbc-api:${TAG}
