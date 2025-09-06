@@ -1,0 +1,113 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [ main ]
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  security-events: write
+  actions: read
+  checks: write
+
+env:
+  JAVA_VERSION: '21'
+  GRADLE_OPTS: -Dorg.gradle.jvmargs='-Xmx2g -XX:MaxMetaspaceSize=512m'
+
+jobs:
+  build-test:
+    name: Build & Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Validate Gradle Wrapper
+        uses: gradle/actions/wrapper-validation@v3
+      - name: Set up JDK ${{ env.JAVA_VERSION }}
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: ${{ env.JAVA_VERSION }}
+          cache: gradle
+      - name: Setup Gradle (cache & config)
+        uses: gradle/actions/setup-gradle@v3
+      - name: Build (no tests)
+        run: ./gradlew clean assemble --stacktrace --info
+      - name: Test
+        run: ./gradlew test --stacktrace --info
+      - name: Collect JAR Artifacts
+        if: always()
+        run: |
+          mkdir -p build-outputs/jars
+          find . -type f -path "*/build/libs/*.jar" -exec cp {} build-outputs/jars/ \; || true
+      - name: Upload JARs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: jars
+          path: build-outputs/jars
+          if-no-files-found: warn
+          retention-days: 7
+
+  deploy:
+    name: Deploy
+    needs: build-test
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+    steps:
+      - name: Trigger Remote Deploy Endpoint
+        run: |
+          set -e
+          if [ -z "${{ secrets.DEPLOY_ENDPOINT }}" ]; then
+            echo "Secret DEPLOY_ENDPOINT is not set" >&2
+            exit 1
+          fi
+          echo "Calling deploy endpoint..."
+          curl -X POST \
+               -H 'Accept: application/json' \
+               --fail \
+               "${{ secrets.DEPLOY_ENDPOINT }}"
+          echo "Deploy trigger sent."
+
+  dependency-review:
+    name: Dependency Review (PR only)
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Dependency Review
+        uses: actions/dependency-review-action@v4
+
+  codeql:
+    name: CodeQL Analysis
+    runs-on: ubuntu-latest
+    permissions:
+      security-events: write
+      contents: read
+      actions: read
+    if: github.event_name == 'pull_request' || github.ref == 'refs/heads/main'
+    strategy:
+      fail-fast: false
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: kotlin, java
+      - name: Autobuild (Gradle)
+        run: ./gradlew build -x test
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
