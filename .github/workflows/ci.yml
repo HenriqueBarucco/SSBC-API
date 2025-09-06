@@ -1,16 +1,12 @@
-name: CI/CD
+name: CI
 
 on:
   pull_request:
     branches:
       - main
-  push:
-    branches:
-      - main
 
 jobs:
   build-and-test:
-    if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -33,12 +29,3 @@ jobs:
 
       - name: Docker build
         run: docker build -t myapp:test .
-
-  deploy:
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    runs-on: ubuntu-latest
-    steps:
-      - name: Deploy
-        run: curl "$DEPLOY_ENDPOINT"
-        env:
-          DEPLOY_ENDPOINT: ${{ secrets.DEPLOY_ENDPOINT }}
