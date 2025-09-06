@@ -9,6 +9,21 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
+      - name: Log in to Registry
+        run: echo "${{ secrets.REGISTRY_PASSWORD }}" | docker login "${{ secrets.REGISTRY_ENDPOINT }}" -u "${{ secrets.REGISTRY_USERNAME }}" --password-stdin
+
+      - name: Set TAG from commit hash
+        id: vars
+        run: echo "TAG=$(echo $GITHUB_SHA | cut -c1-8)" >> $GITHUB_ENV
+
+      - name: Pull image from CI
+        run: docker pull registry.henriquebarucco.com.br/ssbc-api:${TAG}
+
+      - name: Tag as latest and push
+        run: |
+          docker tag "${{ secrets.REGISTRY_ENDPOINT }}"/ssbc-api:${TAG} "${{ secrets.REGISTRY_ENDPOINT }}"/ssbc-api:latest
+          docker push "${{ secrets.REGISTRY_ENDPOINT }}"/ssbc-api:latest
+
       - name: Deploy
         run: curl "$DEPLOY_ENDPOINT"
         env:
