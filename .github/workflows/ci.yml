@@ -30,6 +30,11 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+      - name: Ensure gradlew executable
+        run: |
+          sed -i 's/\r$//' gradlew || true
+          chmod +x gradlew
+          ls -l gradlew
       - name: Validate Gradle Wrapper
         uses: gradle/actions/wrapper-validation@v3
       - name: Set up JDK ${{ env.JAVA_VERSION }}
@@ -59,7 +64,7 @@ jobs:
           retention-days: 7
 
   deploy:
-    name: Deploy
+    name: Deploy (manual)
     needs: build-test
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
