@@ -23,3 +23,8 @@ jobs:
         run: |
           docker tag "${{ secrets.REGISTRY_ENDPOINT }}"/ssbc-api:${TAG} "${{ secrets.REGISTRY_ENDPOINT }}"/ssbc-api:latest
           docker push "${{ secrets.REGISTRY_ENDPOINT }}"/ssbc-api:latest
+
+      - name: Deploy
+        run: curl "$DEPLOY_ENDPOINT"
+        env:
+          DEPLOY_ENDPOINT: ${{ secrets.DEPLOY_ENDPOINT }}
