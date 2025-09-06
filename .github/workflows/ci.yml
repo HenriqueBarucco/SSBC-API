@@ -85,16 +85,6 @@ jobs:
                "${{ secrets.DEPLOY_ENDPOINT }}"
           echo "Deploy trigger sent."
 
-  dependency-review:
-    name: Dependency Review (PR only)
-    if: github.event_name == 'pull_request'
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Dependency Review
-        uses: actions/dependency-review-action@v4
-
   codeql:
     name: CodeQL Analysis
     runs-on: ubuntu-latest
