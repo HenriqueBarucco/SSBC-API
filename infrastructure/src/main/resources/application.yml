@@ -14,3 +14,9 @@ logstash:
   port: "\${LOGSTASH_PORT:5000}"
   token: "\${LOGSTASH_TOKEN:xxx}"
   env: "\${ENV:dev}"
+
+springdoc:
+  swagger-ui:
+    enabled: "\${SWAGGER_ENABLED:false}"
+  api-docs:
+    enabled: "\${SWAGGER_ENABLED:false}"
