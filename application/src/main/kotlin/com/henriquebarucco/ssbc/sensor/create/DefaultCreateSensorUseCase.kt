@@ -12,9 +12,6 @@ class DefaultCreateSensorUseCase(
         val (name, phoneNumber) = input
 
         val sensor = Sensor.new(name, phoneNumber)
-
-        sensor.detected()
-
         this.sensorGateway.save(sensor)
 
         return CreateSensorOutput(sensor)
