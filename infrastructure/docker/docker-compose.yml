@@ -1,4 +1,16 @@
 services:
+  mongodb:
+    container_name: ssbc-mongodb
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=usr_ssbc
+      - MONGO_INITDB_ROOT_PASSWORD=ssbc
+      - MONGO_INITDB_DATABASE=ssbc
+    volumes:
+      - ssbc-mongodb:/data/db
+
   elasticsearch:
     container_name: ssbc-elasticsearch
     image: docker.elastic.co/elasticsearch/elasticsearch:8.18.0
@@ -48,6 +60,7 @@ services:
       - elasticsearch
 
 volumes:
+  ssbc-mongodb:
   ssbc-elasticsearch:
   ssbc-kibana:
 
