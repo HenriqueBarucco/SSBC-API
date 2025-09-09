@@ -32,7 +32,7 @@ class Sensor(
                 id = SensorId.with(id),
                 name = name,
                 phone = Phone(phoneNumber),
-                lastDetectedAt = null,
+                lastDetectedAt = lastDetectedAt,
             )
     }
 
