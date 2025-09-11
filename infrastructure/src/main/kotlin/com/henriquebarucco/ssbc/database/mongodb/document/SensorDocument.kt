@@ -3,6 +3,7 @@ package com.henriquebarucco.ssbc.database.mongodb.document
 import com.henriquebarucco.ssbc.sensor.Sensor
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
+import java.time.Instant
 
 @Document("sensors")
 data class SensorDocument(
@@ -10,8 +11,9 @@ data class SensorDocument(
     val id: String,
     val name: String,
     val phoneNumber: String,
+    val lastDetectedAt: Instant?,
 ) {
-    fun toDomain() = Sensor.with(id, name, phoneNumber)
+    fun toDomain() = Sensor.with(id, name, phoneNumber, lastDetectedAt)
 }
 
 fun Sensor.toDocument() =
@@ -19,4 +21,5 @@ fun Sensor.toDocument() =
         id = id.value,
         name = name,
         phoneNumber = phone.number,
+        lastDetectedAt = lastDetectedAt,
     )
