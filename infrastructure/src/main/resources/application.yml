@@ -8,6 +8,14 @@ server:
 spring:
   application:
     name: SSBC-API
+  data:
+    mongodb:
+      host: "\${MONGODB_HOST:localhost}"
+      port: "\${MONGODB_PORT:27017}"
+      authentication-database: "\${MONGODB_AUTHENTICATION_DATABASE:admin}"
+      database: "\${MONGODB_DATABASE:ssbc}"
+      username: "\${MONGODB_USERNAME:usr_ssbc}"
+      password: "\${MONGODB_PASSWORD:ssbc}"
 
 logstash:
   url: "\${LOGSTASH_URL:localhost}"
