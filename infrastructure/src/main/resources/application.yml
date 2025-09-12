@@ -16,6 +16,17 @@ spring:
       database: "\${MONGODB_DATABASE:ssbc}"
       username: "\${MONGODB_USERNAME:usr_ssbc}"
       password: "\${MONGODB_PASSWORD:ssbc}"
+  rabbitmq:
+    host: "\${RABBITMQ_HOST:localhost}"
+    port: "\${RABBITMQ_PORT:5672}"
+    virtual-host: "\${RABBITMQ_VIRTUAL_HOST:/}"
+    username: "\${RABBITMQ_USERNAME:guest}"
+    password: "\${RABBITMQ_PASSWORD:guest}"
+
+rabbitmq:
+  queues:
+    notify-sensor-detected:
+      queue: "\${RABBITMQ_QUEUE_NOTIFY_SENSOR_DETECTED:notify-sensor-detected-queue}"
 
 logstash:
   url: "\${LOGSTASH_URL:localhost}"

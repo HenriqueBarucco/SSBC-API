@@ -11,6 +11,19 @@ services:
     volumes:
       - ssbc-mongodb:/data/db
 
+  rabbitmq:
+    container_name: ssbc-rabbitmq
+    image: rabbitmq:3-management-alpine
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - ./rabbitmq/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf:ro
+      - ./rabbitmq/definitions.json:/etc/rabbitmq/definitions.json:ro
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+
   elasticsearch:
     container_name: ssbc-elasticsearch
     image: docker.elastic.co/elasticsearch/elasticsearch:8.18.0
