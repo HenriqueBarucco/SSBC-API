@@ -5,6 +5,7 @@ import com.henriquebarucco.ssbc.database.mongodb.document.toDocument
 import com.henriquebarucco.ssbc.event.DomainEventPublisher
 import com.henriquebarucco.ssbc.sensor.Sensor
 import com.henriquebarucco.ssbc.sensor.SensorGateway
+import com.henriquebarucco.ssbc.sensor.SensorId
 import org.springframework.stereotype.Service
 
 @Service
@@ -22,5 +23,10 @@ class SensorService(
         sensor.clearEvents()
 
         return sensor
+    }
+
+    override fun ofId(sensorId: SensorId): Sensor? {
+        val sensorDocument = this.sensorMongodbRepository.findById(sensorId.value).orElse(null)
+        return sensorDocument?.toDomain()
     }
 }

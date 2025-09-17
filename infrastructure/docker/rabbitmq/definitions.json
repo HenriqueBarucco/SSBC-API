@@ -1,0 +1,88 @@
+{
+  "bindings":[
+    {
+      "arguments":{
+
+      },
+      "destination":"notify-sensor-detected-queue",
+      "destination_type":"queue",
+      "routing_key":"notify-sensor-detected",
+      "source":"sensor-detected",
+      "vhost":"/"
+    }
+  ],
+  "exchanges":[
+    {
+      "arguments":{
+
+      },
+      "auto_delete":false,
+      "durable":true,
+      "name":"sensor-detected",
+      "type":"direct",
+      "vhost":"/"
+    }
+  ],
+  "global_parameters":[
+
+  ],
+  "parameters":[
+
+  ],
+  "permissions":[
+    {
+      "configure":".*",
+      "read":".*",
+      "user":"guest",
+      "vhost":"/",
+      "write":".*"
+    }
+  ],
+  "policies":[
+
+  ],
+  "queues":[
+    {
+      "arguments":{
+
+      },
+      "auto_delete":false,
+      "durable":true,
+      "name":"notify-sensor-detected-queue",
+      "type":"classic",
+      "vhost":"/"
+    }
+  ],
+  "rabbit_version":"3.12.12",
+  "rabbitmq_version":"3.12.12",
+  "topic_permissions":[
+
+  ],
+  "users":[
+    {
+      "hashing_algorithm":"rabbit_password_hashing_sha256",
+      "limits":{
+
+      },
+      "name":"guest",
+      "password_hash":"4amzJoB1cAxZhQqaKjj8ZOHhQNAMHrrPKXKlv0H01RAEFkbM",
+      "tags":[
+        "administrator"
+      ]
+    }
+  ],
+  "vhosts":[
+    {
+      "limits":[
+
+      ],
+      "metadata":{
+        "description":"Default virtual host",
+        "tags":[
+
+        ]
+      },
+      "name":"/"
+    }
+  ]
+}
