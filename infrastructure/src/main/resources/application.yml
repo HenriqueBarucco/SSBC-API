@@ -28,6 +28,12 @@ rabbitmq:
     notify-sensor-detected:
       queue: "\${RABBITMQ_QUEUE_NOTIFY_SENSOR_DETECTED:notify-sensor-detected-queue}"
 
+easy-whatsapp:
+  url: "\${EASY_WHATSAPP_URL:http://localhost:8080}"
+  token: "\${EASY_WHATSAPP_TOKEN:xxx}"
+  endpoints:
+    text-message: "\${EASY_WHATSAPP_ENDPOINT_TEXT_MESSAGE:/message/text}"
+
 logstash:
   url: "\${LOGSTASH_URL:localhost}"
   port: "\${LOGSTASH_PORT:5000}"
