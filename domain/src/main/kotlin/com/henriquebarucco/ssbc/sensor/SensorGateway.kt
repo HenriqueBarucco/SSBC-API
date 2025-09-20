@@ -8,5 +8,5 @@ interface SensorGateway {
 
     fun ofId(sensorId: SensorId): Sensor?
 
-    fun getSensor(getSensorDto: GetSensorDto): SensorPageDto?
+    fun getSensor(getSensorDto: GetSensorDto): SensorPageDto
 }

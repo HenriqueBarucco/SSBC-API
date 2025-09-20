@@ -41,16 +41,12 @@ class SensorService(
 
     override fun getSensor(getSensorDto: GetSensorDto): SensorPageDto {
         val sensorDocumentPage = this.executeQuery(getSensorDto)
-        val sensorPageDto = SensorPageDto(
-            content = null,
+        val sensors = sensorDocumentPage.content.map { it.toDomain() }
+        return SensorPageDto(
+            content = sensors,
             totalElements = sensorDocumentPage.totalElements,
             totalPages = sensorDocumentPage.totalPages,
         )
-        val sensors = sensorDocumentPage.content.map { it ->
-            it.toDomain()
-        }
-        sensorPageDto.content = sensors
-        return sensorPageDto
     }
 
 
@@ -64,7 +60,7 @@ class SensorService(
 
         val query = builder.compileQuery(pageable)
         val results = mongoTemplate.find(query, SensorDocument::class.java)
-        val total = this.sensorMongodbRepository.count()
+        val total = mongoTemplate.count(query, SensorDocument::class.java)
         return PageImpl(results, pageable, total)
     }
 

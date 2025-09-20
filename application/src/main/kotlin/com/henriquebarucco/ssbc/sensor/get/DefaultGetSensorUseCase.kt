@@ -1,14 +1,15 @@
 package com.henriquebarucco.ssbc.sensor.get
 
+import com.henriquebarucco.ssbc.sensor.PaginatedOutput
+import com.henriquebarucco.ssbc.sensor.Sensor
 import com.henriquebarucco.ssbc.sensor.SensorGateway
 import com.henriquebarucco.ssbc.sensor.dto.GetSensorDto
-import com.henriquebarucco.ssbc.sensor.get.dto.GetSensorOutput
-import com.henriquebarucco.ssbc.sensor.get.dto.GetSensorQuery
+import com.henriquebarucco.ssbc.sensor.get.dto.GetSensorCommand
 
 class DefaultGetSensorUseCase(
     private val sensorGateway: SensorGateway,
 ) : GetSensorUseCase() {
-    override fun execute(input: GetSensorQuery): GetSensorOutput? {
+    override fun execute(input: GetSensorCommand): PaginatedOutput<Sensor> {
         val (pageSize,pageNumber,name, phoneNumber) = input
         val getSensorDto = GetSensorDto(
             pageSize=pageSize,
@@ -17,6 +18,10 @@ class DefaultGetSensorUseCase(
             phoneNumber = phoneNumber,
         )
         val sensorPageDto = this.sensorGateway.getSensor(getSensorDto)
-        return GetSensorOutput.fromSensorPageDto(sensorPageDto)
+        return PaginatedOutput(
+            content = sensorPageDto.content,
+            totalElements = sensorPageDto.totalElements,
+            totalPages= sensorPageDto.totalPages,
+        )
     }
 }

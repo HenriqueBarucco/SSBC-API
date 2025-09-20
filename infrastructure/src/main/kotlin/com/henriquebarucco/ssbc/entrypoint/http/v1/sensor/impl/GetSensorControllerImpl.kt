@@ -13,8 +13,8 @@ class GetSensorControllerImpl(
     private val getSensorUseCase: GetSensorUseCase
 ) : GetSensorController {
     override fun getSensors(@ModelAttribute getSensorRequest: GetSensorRequest): ResponseEntity<GetSensorResponse> {
-        val getSensorQuery = getSensorRequest.toQuery()
+        val getSensorQuery = getSensorRequest.toCommand()
         val result = getSensorUseCase.execute(getSensorQuery)
-        return ResponseEntity.ok().body(GetSensorResponse.fromOutput(result!!))
+        return ResponseEntity.ok().body(GetSensorResponse.fromOutput(result))
     }
 }
