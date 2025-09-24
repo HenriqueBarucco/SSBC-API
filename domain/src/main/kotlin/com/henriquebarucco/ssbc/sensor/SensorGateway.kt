@@ -1,6 +1,6 @@
 package com.henriquebarucco.ssbc.sensor
 
-import com.henriquebarucco.ssbc.sensor.dto.GetSensorDto
+import com.henriquebarucco.ssbc.sensor.dto.FetchSensorDto
 import com.henriquebarucco.ssbc.sensor.dto.SensorPageDto
 
 interface SensorGateway {
@@ -8,5 +8,5 @@ interface SensorGateway {
 
     fun ofId(sensorId: SensorId): Sensor?
 
-    fun getSensor(getSensorDto: GetSensorDto): SensorPageDto
+    fun getSensor(fetchSensorDto: FetchSensorDto): SensorPageDto
 }

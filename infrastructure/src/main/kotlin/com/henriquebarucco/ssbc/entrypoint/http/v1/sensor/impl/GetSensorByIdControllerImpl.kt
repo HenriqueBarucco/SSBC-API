@@ -8,9 +8,6 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 class GetSensorByIdControllerImpl(
     private val getSensorBydIdUseCase: GetSensorByIdUseCase,
-): GetSensorByIdController {
-    override fun getSensorById(id: String) : GetSensorByIdOutput {
-        return getSensorBydIdUseCase.execute(id)
-    }
-
+) : GetSensorByIdController {
+    override fun getSensorById(id: String): GetSensorByIdOutput = getSensorBydIdUseCase.execute(id)
 }

@@ -7,7 +7,7 @@ import com.henriquebarucco.ssbc.event.DomainEventPublisher
 import com.henriquebarucco.ssbc.sensor.Sensor
 import com.henriquebarucco.ssbc.sensor.SensorGateway
 import com.henriquebarucco.ssbc.sensor.SensorId
-import com.henriquebarucco.ssbc.sensor.dto.GetSensorDto
+import com.henriquebarucco.ssbc.sensor.dto.FetchSensorDto
 import com.henriquebarucco.ssbc.sensor.dto.SensorPageDto
 import com.henriquebarucco.ssbc.service.templates.SensorQueryTemplatesBuilder
 import org.springframework.data.domain.Page
@@ -20,7 +20,7 @@ import org.springframework.stereotype.Service
 class SensorService(
     private val sensorMongodbRepository: SensorMongodbRepository,
     private val eventPublisher: DomainEventPublisher,
-    private val mongoTemplate: MongoTemplate
+    private val mongoTemplate: MongoTemplate,
 ) : SensorGateway {
     override fun save(sensor: Sensor): Sensor {
         val sensorDocument = sensor.toDocument()
@@ -39,8 +39,8 @@ class SensorService(
         return sensorDocument?.toDomain()
     }
 
-    override fun getSensor(getSensorDto: GetSensorDto): SensorPageDto {
-        val sensorDocumentPage = this.executeQuery(getSensorDto)
+    override fun getSensor(fetchSensorDto: FetchSensorDto): SensorPageDto {
+        val sensorDocumentPage = this.executeQuery(fetchSensorDto)
         val sensors = sensorDocumentPage.content.map { it.toDomain() }
         return SensorPageDto(
             content = sensors,
@@ -49,10 +49,9 @@ class SensorService(
         )
     }
 
-
-    private fun executeQuery(getSensorDto: GetSensorDto): Page<SensorDocument> {
-        val builder = SensorQueryTemplatesBuilder(getSensorDto)
-        val (pageSize, pageNumber) = getSensorDto
+    private fun executeQuery(fetchSensorDto: FetchSensorDto): Page<SensorDocument> {
+        val builder = SensorQueryTemplatesBuilder(fetchSensorDto)
+        val (pageSize, pageNumber) = fetchSensorDto
         val pageable = PageRequest.of(pageNumber, pageSize)
 
         builder.whereName()
@@ -63,5 +62,4 @@ class SensorService(
         val total = mongoTemplate.count(query, SensorDocument::class.java)
         return PageImpl(results, pageable, total)
     }
-
 }

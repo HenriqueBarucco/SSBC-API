@@ -1,6 +1,6 @@
-package com.henriquebarucco.ssbc.sensor.dto
+package com.henriquebarucco.ssbc.sensor.get.dto
 
-data class GetSensorDto(
+data class FetchSensorCommand(
     val pageSize: Int,
     val pageNumber: Int,
     val name: String?,

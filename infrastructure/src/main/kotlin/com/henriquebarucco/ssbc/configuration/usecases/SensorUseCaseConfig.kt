@@ -5,10 +5,10 @@ import com.henriquebarucco.ssbc.sensor.create.CreateSensorUseCase
 import com.henriquebarucco.ssbc.sensor.create.DefaultCreateSensorUseCase
 import com.henriquebarucco.ssbc.sensor.detected.DefaultSensorDetectedUseCase
 import com.henriquebarucco.ssbc.sensor.detected.SensorDetectedUseCase
+import com.henriquebarucco.ssbc.sensor.fetch.DefaultFetchSensorUseCase
+import com.henriquebarucco.ssbc.sensor.fetch.FetchSensorUseCase
 import com.henriquebarucco.ssbc.sensor.get.DefaultGetSensorByIdUseCase
-import com.henriquebarucco.ssbc.sensor.get.DefaultGetSensorUseCase
 import com.henriquebarucco.ssbc.sensor.get.GetSensorByIdUseCase
-import com.henriquebarucco.ssbc.sensor.get.GetSensorUseCase
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
@@ -23,7 +23,7 @@ class SensorUseCaseConfig(
     fun sensorDetectedUseCase(): SensorDetectedUseCase = DefaultSensorDetectedUseCase(sensorGateway)
 
     @Bean
-    fun getSensorUseCase(): GetSensorUseCase = DefaultGetSensorUseCase(sensorGateway)
+    fun fetchSensorUseCase(): FetchSensorUseCase = DefaultFetchSensorUseCase(sensorGateway)
 
     @Bean fun getSensorByIdUseCase(): GetSensorByIdUseCase = DefaultGetSensorByIdUseCase(sensorGateway)
 }
