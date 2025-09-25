@@ -4,7 +4,7 @@ import com.henriquebarucco.ssbc.sensor.Sensor
 import com.henriquebarucco.ssbc.shared.PaginatedOutput
 
 data class FetchSensorResponse(
-    val content: List<Sensor>?,
+    val content: List<Sensor>,
     val totalElements: Long,
     val totalPages: Int,
 ) {

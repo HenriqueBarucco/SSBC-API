@@ -7,7 +7,7 @@ import com.henriquebarucco.ssbc.event.DomainEventPublisher
 import com.henriquebarucco.ssbc.sensor.Sensor
 import com.henriquebarucco.ssbc.sensor.SensorGateway
 import com.henriquebarucco.ssbc.sensor.SensorId
-import com.henriquebarucco.ssbc.sensor.dto.FetchSensorDto
+import com.henriquebarucco.ssbc.sensor.dto.FetchSensorsDto
 import com.henriquebarucco.ssbc.sensor.dto.SensorPageDto
 import com.henriquebarucco.ssbc.service.templates.SensorQueryTemplatesBuilder
 import org.springframework.data.domain.Page
@@ -39,8 +39,8 @@ class SensorService(
         return sensorDocument?.toDomain()
     }
 
-    override fun getSensor(fetchSensorDto: FetchSensorDto): SensorPageDto {
-        val sensorDocumentPage = this.executeQuery(fetchSensorDto)
+    override fun fetch(fetchSensorsDto: FetchSensorsDto): SensorPageDto {
+        val sensorDocumentPage = this.executeQuery(fetchSensorsDto)
         val sensors = sensorDocumentPage.content.map { it.toDomain() }
         return SensorPageDto(
             content = sensors,
@@ -49,9 +49,9 @@ class SensorService(
         )
     }
 
-    private fun executeQuery(fetchSensorDto: FetchSensorDto): Page<SensorDocument> {
-        val builder = SensorQueryTemplatesBuilder(fetchSensorDto)
-        val (pageSize, pageNumber) = fetchSensorDto
+    private fun executeQuery(fetchSensorsDto: FetchSensorsDto): Page<SensorDocument> {
+        val builder = SensorQueryTemplatesBuilder(fetchSensorsDto)
+        val (pageSize, pageNumber) = fetchSensorsDto
         val pageable = PageRequest.of(pageNumber, pageSize)
 
         builder.whereName()

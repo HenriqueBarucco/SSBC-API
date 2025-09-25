@@ -1,6 +1,6 @@
 package com.henriquebarucco.ssbc.entrypoint.http.v1.sensor.dto
 
-import com.henriquebarucco.ssbc.sensor.get.dto.FetchSensorCommand
+import com.henriquebarucco.ssbc.sensor.fetch.dto.FetchSensorsCommand
 import jakarta.validation.constraints.Max
 import jakarta.validation.constraints.Min
 import jakarta.validation.constraints.Size
@@ -15,8 +15,8 @@ data class FetchSensorRequest(
     @field:Min(1)
     val size: Int = 20,
 ) {
-    fun toCommand(): FetchSensorCommand =
-        FetchSensorCommand(
+    fun toCommand(): FetchSensorsCommand =
+        FetchSensorsCommand(
             name = name,
             phoneNumber = phoneNumber,
             pageSize = size,

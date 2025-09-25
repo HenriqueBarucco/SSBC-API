@@ -1,26 +1,26 @@
 package com.henriquebarucco.ssbc.service.templates
 
-import com.henriquebarucco.ssbc.sensor.dto.FetchSensorDto
+import com.henriquebarucco.ssbc.sensor.dto.FetchSensorsDto
 import org.springframework.data.domain.Pageable
 import org.springframework.data.mongodb.core.query.Criteria
 import org.springframework.data.mongodb.core.query.Query
 
 class SensorQueryTemplatesBuilder(
-    private val fetchSensorDto: FetchSensorDto,
+    private val fetchSensorsDto: FetchSensorsDto,
 ) {
     private val criteria: Criteria = Criteria()
 
     fun whereName(): SensorQueryTemplatesBuilder {
-        if (fetchSensorDto.name.isNullOrEmpty()) return this
+        if (fetchSensorsDto.name.isNullOrEmpty()) return this
         criteria
             .and("name")
-            .regex(".*${Regex.escape(fetchSensorDto.name!!)}.*", "i")
+            .regex(".*${Regex.escape(fetchSensorsDto.name!!)}.*", "i")
         return this
     }
 
     fun wherePhoneNumber(): SensorQueryTemplatesBuilder {
-        if (fetchSensorDto.phoneNumber.isNullOrEmpty()) return this
-        criteria.and("phoneNumber").`is`(fetchSensorDto.phoneNumber)
+        if (fetchSensorsDto.phoneNumber.isNullOrEmpty()) return this
+        criteria.and("phoneNumber").`is`(fetchSensorsDto.phoneNumber)
         return this
     }
 
