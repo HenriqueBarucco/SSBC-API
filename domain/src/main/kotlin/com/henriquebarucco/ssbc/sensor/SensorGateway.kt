@@ -9,4 +9,6 @@ interface SensorGateway {
     fun ofId(sensorId: SensorId): Sensor?
 
     fun fetch(fetchSensorsDto: FetchSensorsDto): SensorPageDto
+
+    fun update(sensor: Sensor): Sensor
 }

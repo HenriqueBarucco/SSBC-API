@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 
 @RequestMapping("/v1/sensors")
 interface GetSensorByIdController {
-    @GetMapping("/sensors/{id}")
+    @GetMapping("/{id}")
     fun getSensorById(
         @PathVariable id: String,
     ): ResponseEntity<GetSensorByIdResponse>

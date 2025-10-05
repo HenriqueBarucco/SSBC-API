@@ -4,14 +4,14 @@ import com.henriquebarucco.ssbc.sensor.Sensor
 import com.henriquebarucco.ssbc.shared.PaginatedOutput
 
 data class FetchSensorResponse(
-    val content: List<Sensor>,
+    val content: List<FetchSensorDto>,
     val totalElements: Long,
     val totalPages: Int,
 ) {
     companion object {
         fun fromOutput(output: PaginatedOutput<Sensor>): FetchSensorResponse =
             FetchSensorResponse(
-                content = output.content,
+                content = output.content.map { it -> FetchSensorDto.fromDomain(it) },
                 totalElements = output.totalElements,
                 totalPages = output.totalPages,
             )
