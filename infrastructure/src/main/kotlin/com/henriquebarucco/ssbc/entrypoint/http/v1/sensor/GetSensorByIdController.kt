@@ -1,6 +1,6 @@
 package com.henriquebarucco.ssbc.entrypoint.http.v1.sensor
 
-import com.henriquebarucco.ssbc.entrypoint.http.v1.sensor.dto.GetSensorByIdResponse
+import com.henriquebarucco.ssbc.entrypoint.http.v1.sensor.dto.response.GetSensorByIdResponse
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable

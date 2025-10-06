@@ -7,8 +7,8 @@ import java.time.Instant
 
 class Sensor(
     val id: SensorId,
-    val name: String,
-    val phone: Phone,
+    var name: String,
+    var phone: Phone,
     var lastDetectedAt: Instant?,
 ) : Domain() {
     companion object {
@@ -39,5 +39,13 @@ class Sensor(
     fun detected() {
         this.lastDetectedAt = Instant.now()
         registerEvent(SensorDetectedDomainEvent(this.id.value))
+    }
+
+    fun update(
+        name: String?,
+        phoneNumber: String?,
+    ) {
+        name?.let { this.name = it }
+        phoneNumber?.let { this.phone = Phone(it) }
     }
 }

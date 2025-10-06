@@ -1,6 +1,5 @@
 package com.henriquebarucco.ssbc.sensor.update
 
-import com.henriquebarucco.ssbc.sensor.Sensor
 import com.henriquebarucco.ssbc.sensor.SensorGateway
 import com.henriquebarucco.ssbc.sensor.SensorId
 import com.henriquebarucco.ssbc.sensor.update.dto.UpdateSensorCommand
@@ -11,17 +10,15 @@ class DefaultUpdateSensorUseCase(
     private val sensorGateway: SensorGateway,
 ) : UpdateSensorUseCase() {
     override fun execute(input: UpdateSensorCommand): UpdateSensorOutput {
+        val (id, name, phoneNumber) = input
+
         val sensor =
-            this.sensorGateway.ofId(SensorId.with(input.id))
-                ?: throw ResourceNotFoundException("Sensor with id $input not found")
-        val sensorToSave =
-            Sensor.with(
-                id = input.id,
-                name = input.name ?: sensor.name,
-                phoneNumber = input.phoneNumber ?: sensor.phone.number,
-                lastDetectedAt = input.lastDetectedAt,
-            )
-        val result = sensorGateway.save(sensorToSave)
+            this.sensorGateway.ofId(SensorId.with(id))
+                ?: throw ResourceNotFoundException("Sensor with id $id not found")
+
+        sensor.update(name, phoneNumber)
+
+        val result = this.sensorGateway.save(sensor)
         return UpdateSensorOutput.fromSensor(result)
     }
 }

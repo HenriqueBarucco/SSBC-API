@@ -1,7 +1,7 @@
 package com.henriquebarucco.ssbc.entrypoint.http.v1.sensor.impl
 
 import com.henriquebarucco.ssbc.entrypoint.http.v1.sensor.GetSensorByIdController
-import com.henriquebarucco.ssbc.entrypoint.http.v1.sensor.dto.GetSensorByIdResponse
+import com.henriquebarucco.ssbc.entrypoint.http.v1.sensor.dto.response.GetSensorByIdResponse
 import com.henriquebarucco.ssbc.sensor.get.GetSensorByIdUseCase
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.RestController

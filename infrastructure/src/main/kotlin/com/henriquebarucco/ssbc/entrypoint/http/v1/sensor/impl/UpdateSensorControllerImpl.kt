@@ -1,8 +1,8 @@
 package com.henriquebarucco.ssbc.entrypoint.http.v1.sensor.impl
 
 import com.henriquebarucco.ssbc.entrypoint.http.v1.sensor.UpdateSensorController
-import com.henriquebarucco.ssbc.entrypoint.http.v1.sensor.dto.UpdateSensorRequest
-import com.henriquebarucco.ssbc.entrypoint.http.v1.sensor.dto.UpdateSensorResponse
+import com.henriquebarucco.ssbc.entrypoint.http.v1.sensor.dto.request.UpdateSensorRequest
+import com.henriquebarucco.ssbc.entrypoint.http.v1.sensor.dto.response.UpdateSensorResponse
 import com.henriquebarucco.ssbc.sensor.update.UpdateSensorUseCase
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.RestController

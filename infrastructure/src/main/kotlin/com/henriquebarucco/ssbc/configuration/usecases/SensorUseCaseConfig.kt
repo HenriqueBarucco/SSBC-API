@@ -27,7 +27,9 @@ class SensorUseCaseConfig(
     @Bean
     fun fetchSensorUseCase(): FetchSensorUseCase = DefaultFetchSensorUseCase(sensorGateway)
 
-    @Bean fun getSensorByIdUseCase(): GetSensorByIdUseCase = DefaultGetSensorByIdUseCase(sensorGateway)
+    @Bean
+    fun getSensorByIdUseCase(): GetSensorByIdUseCase = DefaultGetSensorByIdUseCase(sensorGateway)
 
-    @Bean fun updateSensorUseCase(): UpdateSensorUseCase = DefaultUpdateSensorUseCase(sensorGateway)
+    @Bean
+    fun updateSensorUseCase(): UpdateSensorUseCase = DefaultUpdateSensorUseCase(sensorGateway)
 }

@@ -1,4 +1,4 @@
-package com.henriquebarucco.ssbc.entrypoint.http.v1.sensor.dto
+package com.henriquebarucco.ssbc.entrypoint.http.v1.sensor.dto.response
 
 import com.henriquebarucco.ssbc.sensor.create.dto.CreateSensorOutput
 
