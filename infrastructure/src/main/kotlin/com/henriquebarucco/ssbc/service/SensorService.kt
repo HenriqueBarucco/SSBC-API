@@ -49,12 +49,6 @@ class SensorService(
         )
     }
 
-    override fun update(sensor: Sensor): Sensor {
-        val sensorDocument = sensor.toDocument()
-        val result = this.sensorMongodbRepository.save(sensorDocument)
-        return result.toDomain()
-    }
-
     private fun executeQuery(fetchSensorsDto: FetchSensorsDto): Page<SensorDocument> {
         val builder = SensorQueryTemplatesBuilder(fetchSensorsDto)
         val (pageSize, pageNumber) = fetchSensorsDto
