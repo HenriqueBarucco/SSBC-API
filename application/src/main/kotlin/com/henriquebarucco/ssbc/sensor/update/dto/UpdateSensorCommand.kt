@@ -4,4 +4,5 @@ data class UpdateSensorCommand(
     val id: String,
     val name: String?,
     val phoneNumber: String?,
+    val delayToNotify: Long?,
 )

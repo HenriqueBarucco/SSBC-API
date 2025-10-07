@@ -10,13 +10,13 @@ class DefaultUpdateSensorUseCase(
     private val sensorGateway: SensorGateway,
 ) : UpdateSensorUseCase() {
     override fun execute(input: UpdateSensorCommand): UpdateSensorOutput {
-        val (id, name, phoneNumber) = input
+        val (id, name, phoneNumber, delayToNotify) = input
 
         val sensor =
             this.sensorGateway.ofId(SensorId.with(id))
                 ?: throw ResourceNotFoundException("Sensor with id $id not found")
 
-        sensor.update(name, phoneNumber)
+        sensor.update(name, phoneNumber, delayToNotify)
 
         val result = this.sensorGateway.save(sensor)
         return UpdateSensorOutput.fromSensor(result)

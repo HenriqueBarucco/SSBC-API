@@ -5,11 +5,13 @@ import com.henriquebarucco.ssbc.entrypoint.http.v1.sensor.dto.response.FetchSens
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.responses.ApiResponses
+import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.http.ResponseEntity
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 
+@Tag(name = "Sensors", description = "Operações de gestão de sensores")
 @RequestMapping("/v1/sensors")
 interface FetchSensorsController {
     @GetMapping
