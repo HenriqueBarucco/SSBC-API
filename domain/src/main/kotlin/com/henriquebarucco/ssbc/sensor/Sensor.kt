@@ -44,7 +44,7 @@ class Sensor(
     fun detected() {
         val now = Instant.now()
 
-        if (shouldRegisterEvent()) {
+        if (shouldRegisterEvent(now)) {
             this.lastDetectedAt = now
             registerEvent(SensorDetectedDomainEvent(this.id.value))
         }
@@ -60,6 +60,6 @@ class Sensor(
         delayToNotify?.let { this.configuration = Configuration(it) }
     }
 
-    private fun shouldRegisterEvent() =
-        this.lastDetectedAt == null || Instant.now().isAfter(this.lastDetectedAt!!.plusSeconds(this.configuration.delayToNotify))
+    private fun shouldRegisterEvent(now: Instant) =
+        this.lastDetectedAt == null || now.isAfter(this.lastDetectedAt!!.plusSeconds(this.configuration.delayToNotify))
 }
