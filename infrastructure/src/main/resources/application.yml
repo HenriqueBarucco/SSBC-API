@@ -43,5 +43,6 @@ logstash:
 springdoc:
   swagger-ui:
     enabled: "\${SWAGGER_ENABLED:false}"
+    path: '/docs'
   api-docs:
     enabled: "\${SWAGGER_ENABLED:false}"

@@ -1,8 +1,8 @@
 package com.henriquebarucco.ssbc.entrypoint.http.v1.sensor.impl
 
 import com.henriquebarucco.ssbc.entrypoint.http.v1.sensor.CreateSensorController
-import com.henriquebarucco.ssbc.entrypoint.http.v1.sensor.dto.CreateSensorRequest
-import com.henriquebarucco.ssbc.entrypoint.http.v1.sensor.dto.CreateSensorResponse
+import com.henriquebarucco.ssbc.entrypoint.http.v1.sensor.dto.request.CreateSensorRequest
+import com.henriquebarucco.ssbc.entrypoint.http.v1.sensor.dto.response.CreateSensorResponse
 import com.henriquebarucco.ssbc.sensor.create.CreateSensorUseCase
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
