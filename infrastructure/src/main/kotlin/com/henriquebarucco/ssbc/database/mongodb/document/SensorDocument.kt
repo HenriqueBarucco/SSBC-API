@@ -11,10 +11,11 @@ data class SensorDocument(
     val id: String,
     val name: String,
     val phoneNumber: String,
+    val base64: String?,
     val lastDetectedAt: Instant?,
     val delayToNotify: Long,
 ) {
-    fun toDomain() = Sensor.with(id, name, phoneNumber, lastDetectedAt, delayToNotify)
+    fun toDomain() = Sensor.with(id, name, phoneNumber, base64, lastDetectedAt, delayToNotify)
 }
 
 fun Sensor.toDocument() =
@@ -22,6 +23,7 @@ fun Sensor.toDocument() =
         id = id.value,
         name = name,
         phoneNumber = phone.number,
+        base64 = base64,
         lastDetectedAt = lastDetectedAt,
         delayToNotify = configuration.delayToNotify,
     )
