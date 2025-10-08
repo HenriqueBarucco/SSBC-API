@@ -6,6 +6,7 @@ import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestHeader
 import org.springframework.web.bind.annotation.RequestPart
 import org.springframework.web.multipart.MultipartFile
 
@@ -21,7 +22,7 @@ interface EasyWhatsAppClient {
         consumes = [MediaType.MULTIPART_FORM_DATA_VALUE],
     )
     fun sendImageMessage(
-        @RequestPart("token") token: String,
+        @RequestHeader("Token") token: String,
         @RequestPart("phone") phone: String,
         @RequestPart("file") file: MultipartFile,
         @RequestPart("caption") caption: String,
