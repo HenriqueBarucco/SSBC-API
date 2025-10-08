@@ -8,7 +8,7 @@ interface NotificationSender {
 
     fun send(
         to: String,
-        message: String,
+        message: String?,
         photo: ByteArray,
     )
 }

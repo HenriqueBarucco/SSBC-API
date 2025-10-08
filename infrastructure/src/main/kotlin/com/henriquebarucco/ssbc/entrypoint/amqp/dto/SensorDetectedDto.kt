@@ -10,5 +10,6 @@ data class SensorDetectedDto(
     fun toCommand() =
         SensorDetectedCommand(
             sensorId = id,
+            base64 = null,
         )
 }

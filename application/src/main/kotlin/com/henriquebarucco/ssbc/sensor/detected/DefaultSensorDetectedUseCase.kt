@@ -12,7 +12,7 @@ class DefaultSensorDetectedUseCase(
     private val logger = getLogger()
 
     override fun execute(input: SensorDetectedCommand) {
-        val (sensorId) = input
+        val (sensorId, base64) = input
 
         this.logger.info("[SENSOR_DETECTED] Starting sensor detected $sensorId")
 
@@ -20,7 +20,7 @@ class DefaultSensorDetectedUseCase(
             this.sensorGateway.ofId(SensorId.with(sensorId))
                 ?: throw ResourceNotFoundException("Sensor with id $sensorId not found")
 
-        sensor.detected()
+        sensor.detected(base64)
         this.sensorGateway.save(sensor)
 
         this.logger.info("[SENSOR_DETECTED] Sensor detected finished $sensorId")

@@ -33,6 +33,7 @@ easy-whatsapp:
   token: "\${EASY_WHATSAPP_TOKEN:xxx}"
   endpoints:
     text-message: "\${EASY_WHATSAPP_ENDPOINT_TEXT_MESSAGE:/message/text}"
+    image-message: "\${EASY_WHATSAPP_ENDPOINT_IMAGE_MESSAGE:/message/image}"
 
 logstash:
   url: "\${LOGSTASH_URL:localhost}"
