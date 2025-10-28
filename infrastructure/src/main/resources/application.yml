@@ -46,3 +46,17 @@ springdoc:
     path: '/docs'
   api-docs:
     enabled: "\${SWAGGER_ENABLED:false}"
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: prometheus, health
+  metrics:
+    tags:
+      application: "\${spring.application.name}"
+    distribution:
+      percentiles-histogram:
+        http:
+          server:
+            requests: 'true'
