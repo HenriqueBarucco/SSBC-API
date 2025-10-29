@@ -26,8 +26,9 @@ class SensorDetectedConsumer(
     )
     fun sensorDetectedMessage(message: ByteArray) {
         try {
-            val messageBody = json.decodeFromString<SensorDetectedDto>(String(message))
-            MDC.put(MESSAGE_BODY, json.encodeToString(messageBody))
+            val payload = message.decodeToString()
+            val messageBody = json.decodeFromString<SensorDetectedDto>(payload)
+            MDC.put(MESSAGE_BODY, payload)
 
             this.logger.info("[SENSOR_DETECTED] Received message of sensor detected")
             this.sensorDetectedUseCase.execute(messageBody.toCommand())

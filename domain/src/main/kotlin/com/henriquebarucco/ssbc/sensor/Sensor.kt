@@ -3,6 +3,7 @@ package com.henriquebarucco.ssbc.sensor
 import com.henriquebarucco.ssbc.sensor.vo.Configuration
 import com.henriquebarucco.ssbc.sensor.vo.Phone
 import com.henriquebarucco.ssbc.shared.events.SensorDetectedDomainEvent
+import com.henriquebarucco.ssbc.shared.events.SensorImageAnalyzerDomainEvent
 import com.henriquebarucco.ssbc.shared.events.SensorImageDomainEvent
 import com.henriquebarucco.ssbc.shared.utils.Domain
 import java.time.Instant
@@ -56,6 +57,7 @@ class Sensor(
             if (base64 != null) {
                 this.base64 = base64
                 registerEvent(SensorImageDomainEvent(this.id.value))
+                registerEvent(SensorImageAnalyzerDomainEvent(this.id.value))
             }
         }
     }

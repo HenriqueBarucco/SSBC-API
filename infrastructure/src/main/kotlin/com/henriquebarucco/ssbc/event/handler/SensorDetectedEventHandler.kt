@@ -5,6 +5,7 @@ import com.henriquebarucco.ssbc.external.NotificationSender
 import com.henriquebarucco.ssbc.shared.events.SensorDetectedDomainEvent
 import com.henriquebarucco.ssbc.utils.Logger.Companion.getLogger
 import org.springframework.context.event.EventListener
+import org.springframework.scheduling.annotation.Async
 import org.springframework.stereotype.Component
 
 @Component
@@ -14,6 +15,7 @@ class SensorDetectedEventHandler(
 ) {
     private val logger = getLogger()
 
+    @Async
     @EventListener
     fun handle(event: SensorDetectedDomainEvent) {
         this.logger.info("[SENSOR_DETECTED_EVENT] Sensor detected event received: ${event.sensorId}")
