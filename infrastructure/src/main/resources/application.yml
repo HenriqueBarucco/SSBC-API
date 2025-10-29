@@ -36,7 +36,7 @@ easy-whatsapp:
     image-message: "\${EASY_WHATSAPP_ENDPOINT_IMAGE_MESSAGE:/message/image}"
 
 lmstudio:
-  url: "\${LMSTUDIO_API_URL:http://192.168.0.3:1234}"
+  url: "\${LMSTUDIO_API_URL:http://localhost:1234}"
   model: "\${LMSTUDIO_MODEL:gemma-3-27b-it}"
   timeout-seconds: "\${LMSTUDIO_TIMEOUT_SECONDS:30}"
   max-retries: "\${LMSTUDIO_MAX_RETRIES:3}"

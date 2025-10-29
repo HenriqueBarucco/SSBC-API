@@ -6,7 +6,7 @@ import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 
-@FeignClient(name = "lmstudio-client", url = "\${lmstudio.url}")
+@FeignClient(name = "lmstudio-client", url = "\${lmstudio.url}", configuration = [LmStudioFeignConfig::class])
 interface LmStudioClient {
     @PostMapping(value = ["/v1/chat/completions"], consumes = [MediaType.APPLICATION_JSON_VALUE])
     fun chatCompletions(
