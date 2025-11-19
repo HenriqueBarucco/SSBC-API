@@ -10,7 +10,9 @@ import org.springframework.web.util.ContentCachingRequestWrapper
 import org.springframework.web.util.ContentCachingResponseWrapper
 import java.util.UUID
 
-class SemanticLoggingFilter : Filter {
+class SemanticLoggingFilter(
+    private val urisToIgnore: List<String> = emptyList(),
+) : Filter {
     private val logger = getLogger()
 
     override fun doFilter(
@@ -38,13 +40,27 @@ class SemanticLoggingFilter : Filter {
             MDC.put("status", res.status.toString())
             MDC.put("latencyMs", duration.toString())
 
-            logRequest(req)
-            logResponse(res)
+            if (!shouldIgnore(req.requestURI)) {
+                logRequest(req)
+                logResponse(res)
+            }
 
             MDC.clear()
             res.copyBodyToResponse()
         }
     }
+
+    private fun shouldIgnore(uri: String): Boolean =
+        urisToIgnore.any { pattern ->
+            when {
+                pattern.endsWith("/*") -> {
+                    val base = pattern.removeSuffix("/*")
+                    uri == base || uri.startsWith("$base/")
+                }
+
+                else -> uri == pattern
+            }
+        }
 
     private fun logRequest(request: ContentCachingRequestWrapper) {
         val body = request.contentAsByteArray.decodeToString()

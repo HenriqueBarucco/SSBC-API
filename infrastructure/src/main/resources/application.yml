@@ -47,6 +47,9 @@ logstash:
   port: "\${LOGSTASH_PORT:5000}"
   env: "\${ENV:dev}"
 
+logging:
+  uris-to-ignore: "\${LOGGING_URIS_TO_IGNORE:/actuator/*,/docs,/v3/api-docs}"
+
 springdoc:
   swagger-ui:
     enabled: "\${SWAGGER_ENABLED:false}"
