@@ -42,7 +42,7 @@ class SemanticLoggingFilter(
 
             if (!shouldIgnore(req.requestURI)) {
                 logRequest(req)
-                logResponse(res)
+                logResponse(res, req, duration)
             }
 
             MDC.clear()
@@ -65,25 +65,29 @@ class SemanticLoggingFilter(
     private fun logRequest(request: ContentCachingRequestWrapper) {
         val body = request.contentAsByteArray.decodeToString()
 
+        MDC.put("request-body", body)
+        MDC.put("request-headers", extractHeaders(request).toString())
+
         logger.info(
-            "request.received {}",
-            mapOf(
-                "body" to body.ifBlank { null },
-                "headers" to extractHeaders(request),
-            ),
+            "[REQUEST] {} {}{} from={}",
+            request.method,
+            request.requestURI,
+            request.queryString?.let { "?$it" } ?: "",
+            request.remoteAddr,
         )
     }
 
-    private fun logResponse(response: ContentCachingResponseWrapper) {
+    private fun logResponse(
+        response: ContentCachingResponseWrapper,
+        request: ContentCachingRequestWrapper,
+        duration: Long,
+    ) {
         val body = response.contentAsByteArray.decodeToString()
 
-        logger.info(
-            "response.sent {}",
-            mapOf(
-                "body" to body.ifBlank { null },
-                "headers" to extractHeaders(response),
-            ),
-        )
+        MDC.put("response-body", body)
+        MDC.put("response-headers", extractHeaders(response).toString())
+
+        logger.info("[RESPONSE] {} {}ms {}", response.status, duration, request.requestURI)
     }
 
     private fun extractHeaders(req: HttpServletRequest): Map<String, String> = req.headerNames.toList().associateWith { req.getHeader(it) }
